@@ -1,14 +1,16 @@
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
+var colour = Math.floor(Math.random()*16777215).toString(16);
+var ballRadius = 10;
 var x = canvas.width / 2;
-var y = canvas.height - 30;
+var y = canvas.height / 2;
 var dx = 2;
 var dy = -2;
 
 function drawBall() {
     ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI * 2);
-    ctx.fillStyle = "#0095DD";
+    ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+    ctx.fillStyle = "#" + colour;
     ctx.fill();
     ctx.closePath();
 }
@@ -16,6 +18,16 @@ function drawBall() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
+
+    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+        colour = Math.floor(Math.random()*16777215).toString(16);
+        dx = -dx;
+    }
+    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+        colour = Math.floor(Math.random()*16777215).toString(16);
+        dy = -dy;
+    }
+
     x += dx;
     y += dy;
 }
